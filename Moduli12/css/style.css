@@ -1,0 +1,47 @@
+h1 {
+
+    color:green;
+    letter-spacing: 20px;
+    word-spacing: 50px;
+    text-align: center;
+
+}
+
+p {
+
+    text-indent: 40px;
+    text-align: left;
+    font-family: "Test Font";
+}
+
+h2 {
+
+    text-decoration: overline;
+}
+
+h3 {
+
+    text-decoration: line-through;
+}
+
+h4 {
+
+    text-decoration: underline;
+}
+
+.MyElement {
+
+    color:brown;
+    font-size:30px;
+}
+
+#MYID {
+
+    /* font-style:italic; */
+    font-style:oblique;
+}
+
+@font-face {
+    font-family: "Test Font";
+    src: url("Fonts/SuperPeace.tff");
+}
