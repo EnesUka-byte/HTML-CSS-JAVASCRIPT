@@ -1,0 +1,61 @@
+div.gallery {
+
+    margin:5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 180px;
+  
+  }
+  
+  div.gallery:hover {
+    border: 1px solid #777;
+  }
+  
+  div.gallery img {
+  
+    width:100%;
+    height: auto;
+  }
+  
+  div.desc {
+    padding: 15px;
+    text-align: center;
+  }
+
+  .sprite {
+    background: url(../images/houses.png) no-repeat;
+  }
+
+  .sprite.engineers {
+    height:500px;
+    width: 500px;
+    display: inline-block;
+    background-position: 0px 0px;
+
+  }
+
+  .sprite.shadows {
+    height:500px;
+    width: 500px;
+    display: inline-block;
+    background-position: 0px -500px;
+
+  }
+
+  p[class*="ds"] {
+
+    background: blue;
+    color: white;
+    padding: 20px;
+
+  }
+
+div[div~="ds"] {
+    background: green;
+    color: bisque;
+    padding: 20px;
+}
+
+input[readonly]{
+  border: 1px solid green;
+}
