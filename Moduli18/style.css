@@ -1,0 +1,122 @@
+/* #translate {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: translate(100px, 50px);
+    padding: 10px;
+}
+
+#rotate {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: rotate(45deg);
+    padding: 10px;
+}
+
+#scale {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: scale(2, 2);
+    padding: 10px;
+} */
+
+/* #scaleX {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: scaleX(3);
+    padding: 10px;
+}
+
+#scaleY {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: scaleY(3);
+    padding: 10px;
+} */
+
+/* #skewx {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: skewX(-40deg);
+    padding: 10px;
+}
+
+#skewy {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: skewY(40deg);
+    padding: 10px;
+} */
+
+#rotatex {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: rotateX(130deg);
+    padding: 10px;
+}
+
+#rotatey {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: rotateY(130deg);
+    padding: 10px;
+}
+
+#rotatez {
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    transform: rotateZ(130deg);
+    padding: 10px;
+}
+
+div {
+    width:200px;
+    height:200px;
+    background-color: red;
+    transition: background 3s, border-radius 5s;
+    transition-timing-function: linear;
+    transition-delay: 2s;
+}
+
+div:hover {
+    background-color: blue;
+    border-radius: 50%;
+}
+
+#spiderman img{
+    transform: scale(1);
+    transition: 3s ease-in-out;
+}
+
+#spiderman:hover img{
+    transform: scale(1.3);
+}
