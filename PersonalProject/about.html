@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Project</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* Base */
+    html, body {
+      margin: 0; 
+      padding: 0; 
+      height: 100%;
+      background-color: #27AE60;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250' viewBox='0 0 20 20'%3E%3Cg %3E%3Cpolygon fill='%232ECC71' points='20 10 10 0 0 0 20 20'/%3E%3Cpolygon fill='%232ECC71' points='0 10 0 20 10 20'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Hero container */
+    section.hero {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Menu container */
+    .hero1 {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .hero1 img {
+      height: 100px;
+      width: 100px;
+      object-fit: contain;
+      user-select: none;
+    }
+
+    /* Menu links */
+    .hero1 a.menu {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      color: #000;
+      text-decoration: none;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .hero1 a.menu:hover {
+      background-color: #2ECC71;
+      color: white;
+    }
+
+    .hero1 a.menu.active,
+    .hero1 a.menu:focus {
+      animation: fadeInBg 0.6s forwards;
+      outline: none;
+    }
+
+    @keyframes fadeInBg {
+      0% { background-color: transparent; color: #000; }
+      100% { background-color: #27AE60; color: white; }
+    }
+
+    /* Hook container (image + overlay text) */
+    .hook {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 70px); /* Adjust if menu height changes */
+    }
+
+    .hook img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .overlay {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+      color: black; 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%);
+      margin: 0;
+      width: 80%;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 20px;
+      border-radius: 8px;
+      user-select: none;
+    }
+
+    /* Ad sections container */
+    .AD {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Ad sections styles */
+    section.ad {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    section.ad > div {
+      border: 10px solid black;
+      border-radius: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 900px;
+      height: 400px;
+      background-color: white;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.8s ease, transform 0.8s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      user-select: none;
+    }
+
+    section.ad > div:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Reverse layout for 2nd ad */
+    section.ad:nth-child(even) > div {
+      flex-direction: row-reverse;
+    }
+
+    section.ad > div img {
+      align-self: flex-start;
+      border-radius: 25px;
+      height: 400px;
+      width: 400px;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    section.ad > div p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #111;
+      margin-left: 20px;
+      margin-right: 20px;
+      max-width: 450px;
+    }
+
+    /* Visible state for fade-in */
+    section.visible, section.ad > div.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Bottom green section */
+    section.bottom-section {
+      margin-top: 50px;
+      background-color: #2DB96A;
+      width: 100%;
+      min-height: 600px;
+      padding: 40px 20px;
+      box-sizing: border-box;
+      color: white;
+    }
+
+    section.bottom-section > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    section.bottom-section img {
+      border-radius: 50px;
+      height: 400px;
+      width: 400px;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: none;
+      margin-top: 20px;
+    }
+
+    section.bottom-section p {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      font-size: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      user-select: none;
+    }
+
+  </style>
+</head>
+<body>
+
+<section class="hero">
+
+  <div class="hero1" role="navigation" aria-label="Main menu">
+    <img src="images/logo.png" alt="Logo" />
+    <a class="menu" href="Home">Home</a>
+    <a class="menu" href="About">About</a>
+    <a class="menu" href="Contact">Contact</a>
+  </div>
+
+  <div class="hook" aria-label="Hero image and quote">
+    <img src="images/fruit.png" alt="Fresh fruits" />
+    <h1 class="overlay" tabindex="0">
+      "Even the tiniest of seeds can grow into the mightiest of trees, bearing the sweetest of fruits."
+    </h1>
+  </div>
+
+</section>
+
+<div class="AD">
+
+  <section class="ad" aria-label="Fruit delivery guarantee 1">
+    <div>
+      <img src="images/1.png" alt="Fresh fruit 1" />
+      <p>We guarantee that all of our fruits come fresh right to your door.</p>
+    </div>
+  </section>
+
+  <section class="ad" aria-label="Fruit delivery guarantee 2">
+    <div>
+      <img src="images/2.png" alt="Fresh fruit 2" />
+      <p>We guarantee that all of our fruits come fresh right to your door.</p>
+    </div>
+  </section>
+
+  <section class="ad" aria-label="Fruit delivery guarantee 3">
+    <div>
+      <img src="images/3.png" alt="Fresh fruit 3" />
+      <p>We guarantee that all of our fruits come fresh right to your door.</p>
+    </div>
+  </section>
+
+</div>
+
+<section class="bottom-section" aria-label="Gallery and company promise">
+  <div>
+    <img src="images/4.png" alt="Gallery fruit 4" />
+    <img src="images/5.png" alt="Gallery fruit 5" />
+    <img src="images/6.PNG" alt="Gallery fruit 6" />
+  </div>
+  <p>
+    Our website proudly promises that our company delivers the freshest foods swiftly and reliably right to your doorstep. We are committed to ensuring every order arrives in impeccable condition, maintaining the highest standards of quality and care throughout the entire process. With a focus on speed and freshness, we guarantee a flawless delivery experience every time. If, for any reason, you are not completely satisfied with your order, we stand behind our service with a full money-back guarantee, giving you complete confidence and peace of mind when choosing us for your fresh food needs.
+  </p>
+</section>
+
+<script>
+  // Add 'active' class on clicked menu link and fade in color
+  document.querySelectorAll('.hero1 a.menu').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault(); // Remove if actual navigation needed
+      document.querySelectorAll('.hero1 a.menu').forEach(el => el.classList.remove('active'));
+      link.classList.add('active');
+      // Optional: Add navigation logic here
+    });
+  });
+
+  // Scroll fade-in effect using Intersection Observer
+  const observerOptions = { threshold: 0.1 };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Animate once
+      }
+    });
+  }, observerOptions);
+
+  // Observe sections and ad divs
+  document.querySelectorAll('section, section.ad > div').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Fade in body on page load
+  document.body.style.opacity = 0;
+  window.addEventListener('load', () => {
+    document.body.style.transition = "opacity 1s ease";
+    document.body.style.opacity = 1;
+  });
+</script>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 .hero1 {
-    background-color: rgb(148, 247, 148);
+    background-color: #23914E;
     color:rgb(0, 0, 0);
     text-decoration:none;
     width: 100%;
@@ -35,5 +35,20 @@ html {
     margin:0;
 
 }
+
+/* Target the images inside that green section */
+section[style*="#2DB96A"] img {
+  border: 5px solid #145A32; /* a darker green frame for nice contrast */
+  border-radius: 50px;       /* keep the round corners */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* On hover, images gently scale up and get a subtle shadow */
+section[style*="#2DB96A"] img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(20, 90, 50, 0.5);
+}
+
 
 

@@ -1,124 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Project</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fresh Fruits Delivery</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #27ae60;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250' viewBox='0 0 20 20'%3E%3Cg %3E%3Cpolygon fill='%232ecc71' points='20 10 10 0 0 0 20 20'/%3E%3Cpolygon fill='%232ecc71' points='0 10 0 20 10 20'/%3E%3C/g%3E%3C/svg%3E");
+      color: #111;
+      overflow-x: hidden;
+      opacity: 0; /* start hidden */
+      transition: opacity 1s ease;
+      min-height: 100vh;
+    }
+    body.loaded {
+      opacity: 1; /* fade in on load */
+    }
 
-    <style>
+    a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      padding: 0.6em 1em;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+    }
 
-        body {
-            background-color: #487346;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='184' height='184' viewBox='0 0 200 200'%3E%3Cg %3E%3Cpolygon fill='%234c8e43' points='100 57.1 64 93.1 71.5 100.6 100 72.1'/%3E%3Cpolygon fill='%236aac5f' points='100 57.1 100 72.1 128.6 100.6 136.1 93.1'/%3E%3Cpolygon fill='%234c8e43' points='100 163.2 100 178.2 170.7 107.5 170.8 92.4'/%3E%3Cpolygon fill='%236aac5f' points='100 163.2 29.2 92.5 29.2 107.5 100 178.2'/%3E%3Cpath fill='%2389CC7C' d='M100 21.8L29.2 92.5l70.7 70.7l70.7-70.7L100 21.8z M100 127.9L64.6 92.5L100 57.1l35.4 35.4L100 127.9z'/%3E%3Cpolygon fill='%23768c3a' points='0 157.1 0 172.1 28.6 200.6 36.1 193.1'/%3E%3Cpolygon fill='%2396ac58' points='70.7 200 70.8 192.4 63.2 200'/%3E%3Cpolygon fill='%23B6CC76' points='27.8 200 63.2 200 70.7 192.5 0 121.8 0 157.2 35.3 192.5'/%3E%3Cpolygon fill='%2396ac58' points='200 157.1 164 193.1 171.5 200.6 200 172.1'/%3E%3Cpolygon fill='%23768c3a' points='136.7 200 129.2 192.5 129.2 200'/%3E%3Cpolygon fill='%23B6CC76' points='172.1 200 164.6 192.5 200 157.1 200 157.2 200 121.8 200 121.8 129.2 192.5 136.7 200'/%3E%3Cpolygon fill='%23768c3a' points='129.2 0 129.2 7.5 200 78.2 200 63.2 136.7 0'/%3E%3Cpolygon fill='%23B6CC76' points='200 27.8 200 27.9 172.1 0 136.7 0 200 63.2 200 63.2'/%3E%3Cpolygon fill='%2396ac58' points='63.2 0 0 63.2 0 78.2 70.7 7.5 70.7 0'/%3E%3Cpolygon fill='%23B6CC76' points='0 63.2 63.2 0 27.8 0 0 27.8'/%3E%3C/g%3E%3C/svg%3E");
-        }
+    a.menu:hover,
+    a.menu.active,
+    a.menu:focus {
+      background-color: #2ecc71;
+      color: #fff;
+      outline: none;
+    }
 
-        html, body {
-    margin: 0; 
-    padding: 0; 
-    height: 100%;
-  }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1rem 2rem;
+      background: rgba(255 255 255 / 0.85);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-   
+    header img.logo {
+      height: 70px;
+      width: 70px;
+      object-fit: contain;
+    }
 
-    </style>
+    nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem 4rem;
+    }
+
+    .hero {
+      position: relative;
+      height: calc(100vh - 90px);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      will-change: opacity, transform;
+    }
+
+    .hero.visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    .hero img.background-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.75);
+      display: block;
+      user-select: none;
+    }
+
+    .hero h1.overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Georgia', serif;
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 1.3;
+      text-align: center;
+      max-width: 90%;
+      color: #222;
+      background-color: rgba(255 255 255 / 0.75);
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      user-select: none;
+    }
+
+    /* Ads container */
+    .ads {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+
+    .ad-card {
+      display: flex;
+      background: white;
+      border-radius: 25px;
+      border: 10px solid black;
+      width: 100%;
+      max-width: 900px;
+      height: 400px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.8s ease, transform 0.8s ease;
+      overflow: hidden;
+      align-items: center;
+      gap: 2rem;
+      padding: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      will-change: opacity, transform;
+    }
+
+    .ad-card.visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    .ad-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    .ad-card img {
+      height: 100%;
+      width: 400px;
+      border-radius: 25px;
+      object-fit: cover;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .ad-card p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #111;
+      flex: 1;
+    }
+
+    /* Reverse layout for every second ad */
+    .ad-card.reverse {
+      flex-direction: row-reverse;
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+      background-color: #2db96a;
+      padding: 3rem 1rem 4rem;
+      border-radius: 24px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      max-width: 1200px;
+      margin: 0 auto 5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      will-change: opacity, transform;
+    }
+    .gallery-section.visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    .gallery {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .gallery img {
+      border-radius: 50px;
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      user-select: none;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    .gallery-section p {
+      color: white;
+      font-size: 1.15rem;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.5;
+      font-weight: 600;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .ad-card {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+      }
+      .ad-card.reverse {
+        flex-direction: column;
+      }
+      .ad-card img {
+        width: 100%;
+        height: 300px;
+        border-radius: 20px;
+      }
+      .gallery img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      nav {
+        justify-content: center;
+        margin-left: 0;
+      }
+      .hero h1.overlay {
+        font-size: 1.4rem;
+        padding: 1rem 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<section class="hero" style="width: 100vw; height: 100vh; overflow: hidden;">
+<header>
+  <img src="images/logo.png" alt="Company Logo" class="logo" />
+  <nav aria-label="Primary navigation">
+    <a href="Home" class="menu active" role="link">Home</a>
+    <a href="About" class="menu" role="link">About</a>
+    <a href="Contact" class="menu" role="link">Contact</a>
+  </nav>
+</header>
 
-  <div class="hero1"style="display: flex; gap: 20px; align-items: center; padding: 10px;">
-    <img style="height: 50px; width: 50px;" src="images/logo.png" alt="logo">
-
-    <a class="menu" style="text-decoration: none; color: rgb(0, 0, 0);" href="Home">Home</a>
-    <a class="menu" style="text-decoration: none; color: rgb(0, 0, 0);" href="About">About</a>
-    <a class="menu" style="text-decoration: none; color: rgb(0, 0, 0);" href="Contact">Contact</a>
-  </div>
-
-  <div class="hook" style="position: relative; width: 100%; height: calc(100vh - 70px);">
-    <!-- 70px is approx height of the top menu, adjust if needed -->
-
-    <img 
-      src="images/fruit.jpg" 
-      style="height: 100%; width: 100%; object-fit: cover; display: block;"
-    >
-
-    <h1 class="overlay" 
-      style="
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
-        color: black; 
-        position: absolute; 
-        top: 50%; 
-        left: 50%; 
-        transform: translate(-50%, -50%);
-        margin: 0;
-        width: 80%;
-        text-align: center;
-        background-color: rgba(255, 255, 255, 0.5);
-        padding: 20px;
-        border-radius: 8px;
-      ">
-      "Even the tiniest of seeds can grow into the mightiest of trees, bearing the sweetest of fruits."
+<main>
+  <section class="hero" aria-label="Main banner">
+    <img
+      src="images/fruit.png"
+      alt="Fresh fruits background"
+      class="background-img"
+      aria-hidden="true"
+      loading="lazy"
+    />
+    <h1 class="overlay" tabindex="0">
+      Even the tiniest of seeds can grow into the mightiest of trees, bearing the sweetest of fruits.
     </h1>
+  </section>
 
-  </div>
+  <section class="ads" aria-label="Featured products">
+    <article class="ad-card">
+      <img src="images/1.png" alt="Fresh fruit 1" loading="lazy" />
+      <p>We guarantee that all of our fruits come fresh right to your door.</p>
+    </article>
 
-</section>
+    <article class="ad-card reverse">
+      <img src="images/2.png" alt="Fresh fruit 2" loading="lazy" />
+      <p>We guarantee that all of our fruits come fresh right to your door.</p>
+    </article>
 
+    <article class="ad-card">
+      <img src="images/3.png" alt="Fresh fruit 3" loading="lazy" />
+      <p>We guarantee that all of our fruits come fresh right to your door.</p>
+    </article>
+  </section>
 
-
-<div class="AD">
-    </section>
-
-    <section class="ad" style="display: flex; justify-content: center; align-items: center; margin-top:20px;">
-    
-    <div style="border:10px solid black; border-radius: 25px; display: flex; justify-content: center; align-items: center; width:900px; height:400px; background-color:white;">
-        <img style="align-self:flex-start; border-radius:25px; height:400px; width:400px; " src="images/1.jpg">
-        
-
-        <p>We guarantee that all of our fruits come fresh right to your door.</p>
-
-        </div>
-    </section>
-
-
-    <section class="ad" style="display: flex; justify-content: center; align-items: center; margin-top:20px;">
-    
-    <div style="border:10px solid black; border-radius: 25px; display: flex; justify-content: center; align-items: center; flex-direction: row-reverse; width:900px; height:400px; background-color:white;">
-        <img style="align-self:flex-start; border-radius:25px; height:400px; width:400px; " src="images/2.jpg">
-        
-
-        <p>We guarantee that all of our fruits come fresh right to your door.</p>
-
-        </div>
-    </section>
-
-
-    <section class="ad" style="display: flex; justify-content: center; align-items: center; margin-top:20px;">
-    
-    <div style="border:10px solid black; border-radius: 25px; display: flex; justify-content: center; align-items: center; width:900px; height:400px; background-color:white;">
-        <img style="align-self:flex-start; border-radius:25px; height:400px; width:400px; " src="images/3.jpg">
-        
-
-        <p>We guarantee that all of our fruits come fresh right to your door.</p>
-
-        </div>
-    </section>
-
+  <section class="gallery-section" aria-label="Gallery and company promise">
+    <div class="gallery">
+      <img src="images/4.png" alt="Gallery fruit 4" loading="lazy" />
+      <img src="images/5.png" alt="Gallery fruit 5" loading="lazy" />
+      <img src="images/6.PNG" alt="Gallery fruit 6" loading="lazy" />
     </div>
+    <p>
+      Our website proudly promises that our company delivers the freshest foods swiftly and reliably right to your doorstep. We are committed to ensuring every order arrives in impeccable condition, maintaining the highest standards of quality and care throughout the entire process. With a focus on speed and freshness, we guarantee a flawless delivery experience every time. If, for any reason, you are not completely satisfied with your order, we stand behind our service with a full money-back guarantee, giving you complete confidence and peace of mind when choosing us for your fresh food needs.
+    </p>
+  </section>
+</main>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observerOptions = { threshold: 0.15 };
 
-    <section style="margin-top:50px; background-color:limegreen; width:100%; height:400px;">
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
 
-        <div style="display:flex; justify-content: center; align-items: center; gap:40px;">
+    // Observe all sections and ad cards
+    document.querySelectorAll('section, .ad-card').forEach(el => observer.observe(el));
+  });
 
-            <div>
-            <img style=" border-radius:50px; height:400px; width:400px;" src="images/4.jpg">
-</div>
-            <img style=" border-radius:50px; height:400px; width:400px;" src="images/5.jpg">
-            <img style=" border-radius:50px; height:400px; width:400px;" src="images/1.jpg">
-        </div>
-    </section>
-    
+  window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+  });
+
+  // Menu active state logic
+  document.querySelectorAll('a.menu').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('a.menu').forEach(el => el.classList.remove('active'));
+      link.classList.add('active');
+      // Navigation logic placeholder
+    });
+  });
+</script>
+
 </body>
 </html>
