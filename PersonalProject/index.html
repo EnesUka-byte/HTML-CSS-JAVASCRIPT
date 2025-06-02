@@ -3,361 +3,304 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fresh Fruits Delivery</title>
+  <title>Personal Project</title>
+  <link rel="stylesheet" href="css/style.css" />
+
   <style>
-    /* Reset & base */
-    * {
-      box-sizing: border-box;
-    }
-    body, html {
-      margin: 0;
-      padding: 0;
+    /* Base */
+    html, body {
+      margin: 0; 
+      padding: 0; 
       height: 100%;
+      background-color: #27AE60;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250' viewBox='0 0 20 20'%3E%3Cg %3E%3Cpolygon fill='%232ECC71' points='20 10 10 0 0 0 20 20'/%3E%3Cpolygon fill='%232ECC71' points='0 10 0 20 10 20'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Hero container */
+    section.hero {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Menu container */
+    .hero1 {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .hero1 img {
+      height: 100px;
+      width: 100px;
+      object-fit: contain;
+      user-select: none;
+    }
+
+    /* Menu links */
+    .hero1 a.menu {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #27ae60;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250' viewBox='0 0 20 20'%3E%3Cg %3E%3Cpolygon fill='%232ecc71' points='20 10 10 0 0 0 20 20'/%3E%3Cpolygon fill='%232ecc71' points='0 10 0 20 10 20'/%3E%3C/g%3E%3C/svg%3E");
-      color: #111;
-      overflow-x: hidden;
-      opacity: 0; /* start hidden */
-      transition: opacity 1s ease;
-      min-height: 100vh;
-    }
-    body.loaded {
-      opacity: 1; /* fade in on load */
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background-color 0.4s ease, color 0.4s ease;
-      padding: 0.6em 1em;
-      border-radius: 8px;
       font-weight: 600;
-      font-size: 1rem;
-      display: inline-block;
+      font-size: 16px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      color: #000;
+      text-decoration: none;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
     }
 
-    a.menu:hover,
-    a.menu.active,
-    a.menu:focus {
-      background-color: #2ecc71;
-      color: #fff;
+    .hero1 a.menu:hover {
+      background-color: #2ECC71;
+      color: white;
+    }
+
+    .hero1 a.menu.active,
+    .hero1 a.menu:focus {
+      animation: fadeInBg 0.6s forwards;
       outline: none;
     }
 
-    header {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 1rem 2rem;
-      background: rgba(255 255 255 / 0.85);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    @keyframes fadeInBg {
+      0% { background-color: transparent; color: #000; }
+      100% { background-color: #27AE60; color: white; }
     }
 
-    header img.logo {
-      height: 70px;
-      width: 70px;
-      object-fit: contain;
-    }
-
-    nav {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-left: auto;
-    }
-
-    main {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem 2rem 4rem;
-    }
-
-    .hero {
+    /* Hook container (image + overlay text) */
+    .hook {
       position: relative;
-      height: calc(100vh - 90px);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      margin-bottom: 3rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-      will-change: opacity, transform;
-    }
-
-    .hero.visible {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-    }
-
-    .hero img.background-img {
       width: 100%;
+      height: calc(100vh - 70px); /* Adjust if menu height changes */
+    }
+
+    .hook img {
       height: 100%;
+      width: 100%;
       object-fit: cover;
-      filter: brightness(0.75);
       display: block;
       user-select: none;
+      pointer-events: none;
     }
 
-    .hero h1.overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
+    .overlay {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+      color: black; 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
       transform: translate(-50%, -50%);
-      font-family: 'Georgia', serif;
-      font-weight: 600;
-      font-size: 2rem;
-      line-height: 1.3;
+      margin: 0;
+      width: 80%;
       text-align: center;
-      max-width: 90%;
-      color: #222;
-      background-color: rgba(255 255 255 / 0.75);
-      padding: 1.5rem 2rem;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 20px;
+      border-radius: 8px;
       user-select: none;
     }
 
-    /* Ads container */
-    .ads {
+    /* Ad sections container */
+    .AD {
+      margin-top: 20px;
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
       align-items: center;
-      margin-bottom: 4rem;
+      gap: 20px;
     }
 
-    .ad-card {
+    /* Ad sections styles */
+    section.ad {
       display: flex;
-      background: white;
-      border-radius: 25px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    section.ad > div {
       border: 10px solid black;
-      width: 100%;
-      max-width: 900px;
+      border-radius: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 900px;
       height: 400px;
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      background-color: white;
       cursor: pointer;
       transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.8s ease, transform 0.8s ease;
-      overflow: hidden;
-      align-items: center;
-      gap: 2rem;
-      padding: 1rem;
       opacity: 0;
       transform: translateY(20px);
-      will-change: opacity, transform;
-    }
-
-    .ad-card.visible {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-    }
-
-    .ad-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-    }
-
-    .ad-card img {
-      height: 100%;
-      width: 400px;
-      border-radius: 25px;
-      object-fit: cover;
-      flex-shrink: 0;
       user-select: none;
     }
 
-    .ad-card p {
+    section.ad > div:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Reverse layout for 2nd ad */
+    section.ad:nth-child(even) > div {
+      flex-direction: row-reverse;
+    }
+
+    section.ad > div img {
+      align-self: flex-start;
+      border-radius: 25px;
+      height: 400px;
+      width: 400px;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    section.ad > div p {
       font-size: 1.2rem;
       font-weight: 600;
       line-height: 1.4;
       color: #111;
-      flex: 1;
+      margin-left: 20px;
+      margin-right: 20px;
+      max-width: 450px;
     }
 
-    /* Reverse layout for every second ad */
-    .ad-card.reverse {
-      flex-direction: row-reverse;
+    /* Visible state for fade-in */
+    section.visible, section.ad > div.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Gallery Section */
-    .gallery-section {
-      background-color: #2db96a;
-      padding: 3rem 1rem 4rem;
-      border-radius: 24px;
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-      max-width: 1200px;
-      margin: 0 auto 5rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-      will-change: opacity, transform;
-    }
-    .gallery-section.visible {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
+    /* Bottom green section */
+    section.bottom-section {
+      margin-top: 50px;
+      background-color: #2DB96A;
+      width: 100%;
+      min-height: 600px;
+      padding: 40px 20px;
+      box-sizing: border-box;
+      color: white;
     }
 
-    .gallery {
+    section.bottom-section > div {
       display: flex;
       justify-content: center;
-      gap: 2rem;
+      align-items: center;
+      gap: 40px;
       flex-wrap: wrap;
-      margin-bottom: 2rem;
+      margin-bottom: 30px;
     }
 
-    .gallery img {
+    section.bottom-section img {
       border-radius: 50px;
-      width: 300px;
-      height: 300px;
+      height: 400px;
+      width: 400px;
       object-fit: cover;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
       user-select: none;
-      transition: transform 0.3s ease;
+      pointer-events: none;
+      margin-top: 20px;
     }
 
-    .gallery img:hover {
-      transform: scale(1.05);
-    }
-
-    .gallery-section p {
-      color: white;
-      font-size: 1.15rem;
+    section.bottom-section p {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      font-size: 20px;
       max-width: 900px;
       margin: 0 auto;
-      line-height: 1.5;
-      font-weight: 600;
-      text-align: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       user-select: none;
     }
 
-    /* Responsive */
-    @media (max-width: 960px) {
-      .ad-card {
-        flex-direction: column;
-        height: auto;
-        padding: 1rem;
-      }
-      .ad-card.reverse {
-        flex-direction: column;
-      }
-      .ad-card img {
-        width: 100%;
-        height: 300px;
-        border-radius: 20px;
-      }
-      .gallery img {
-        width: 100%;
-        max-width: 300px;
-        height: auto;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      nav {
-        justify-content: center;
-        margin-left: 0;
-      }
-      .hero h1.overlay {
-        font-size: 1.4rem;
-        padding: 1rem 1.5rem;
-      }
-    }
   </style>
 </head>
 <body>
 
-<header>
-  <img src="images/logo.png" alt="Company Logo" class="logo" />
-  <nav aria-label="Primary navigation">
-    <a href="Home" class="menu active" role="link">Home</a>
-    <a href="About" class="menu" role="link">About</a>
-    <a href="Contact" class="menu" role="link">Contact</a>
-  </nav>
-</header>
+<section class="hero">
 
-<main>
-  <section class="hero" aria-label="Main banner">
-    <img
-      src="images/fruit.png"
-      alt="Fresh fruits background"
-      class="background-img"
-      aria-hidden="true"
-      loading="lazy"
-    />
+  <div class="hero1" role="navigation" aria-label="Main menu">
+    <img src="images/logo.png" alt="Logo" />
+    <a class="menu" href="Home">Home</a>
+    <a class="menu" href="About">About</a>
+    <a class="menu" href="Contact">Contact</a>
+    <a class="menu" href="Shopping.html">Start Shopping!</a>
+  </div>
+
+  <div class="hook" aria-label="Hero image and quote">
+    <img src="images/fruit.png" alt="Fresh fruits" />
     <h1 class="overlay" tabindex="0">
-      Even the tiniest of seeds can grow into the mightiest of trees, bearing the sweetest of fruits.
+      "Even the tiniest of seeds can grow into the mightiest of trees, bearing the sweetest of fruits."
     </h1>
-  </section>
+  </div>
 
-  <section class="ads" aria-label="Featured products">
-    <article class="ad-card">
-      <img src="images/1.png" alt="Fresh fruit 1" loading="lazy" />
+</section>
+
+<div class="AD">
+
+  <section class="ad" aria-label="Fruit delivery guarantee 1">
+    <div>
+      <img src="images/1.png" alt="Fresh fruit 1" />
       <p>We guarantee that all of our fruits come fresh right to your door.</p>
-    </article>
-
-    <article class="ad-card reverse">
-      <img src="images/2.png" alt="Fresh fruit 2" loading="lazy" />
-      <p>We guarantee that all of our fruits come fresh right to your door.</p>
-    </article>
-
-    <article class="ad-card">
-      <img src="images/3.png" alt="Fresh fruit 3" loading="lazy" />
-      <p>We guarantee that all of our fruits come fresh right to your door.</p>
-    </article>
-  </section>
-
-  <section class="gallery-section" aria-label="Gallery and company promise">
-    <div class="gallery">
-      <img src="images/4.png" alt="Gallery fruit 4" loading="lazy" />
-      <img src="images/5.png" alt="Gallery fruit 5" loading="lazy" />
-      <img src="images/6.PNG" alt="Gallery fruit 6" loading="lazy" />
     </div>
-    <p>
-      Our website proudly promises that our company delivers the freshest foods swiftly and reliably right to your doorstep. We are committed to ensuring every order arrives in impeccable condition, maintaining the highest standards of quality and care throughout the entire process. With a focus on speed and freshness, we guarantee a flawless delivery experience every time. If, for any reason, you are not completely satisfied with your order, we stand behind our service with a full money-back guarantee, giving you complete confidence and peace of mind when choosing us for your fresh food needs.
-    </p>
   </section>
-</main>
+
+  <section class="ad" aria-label="Fruit delivery guarantee 2">
+    <div>
+      <img src="images/2.png" alt="Fresh fruit 2" />
+      <p>We guarantee that all of our fruits come fresh right to your door.</p>
+    </div>
+  </section>
+
+  <section class="ad" aria-label="Fruit delivery guarantee 3">
+    <div>
+      <img src="images/3.png" alt="Fresh fruit 3" />
+      <p>We guarantee that all of our fruits come fresh right to your door.</p>
+    </div>
+  </section>
+
+</div>
+
+<section class="bottom-section" aria-label="Gallery and company promise">
+  <div>
+    <img src="images/4.png" alt="Gallery fruit 4" />
+    <img src="images/5.png" alt="Gallery fruit 5" />
+    <img src="images/6.PNG" alt="Gallery fruit 6" />
+  </div>
+  <p>
+    Our website proudly promises that our company delivers the freshest foods swiftly and reliably right to your doorstep. We are committed to ensuring every order arrives in impeccable condition, maintaining the highest standards of quality and care throughout the entire process. With a focus on speed and freshness, we guarantee a flawless delivery experience every time. If, for any reason, you are not completely satisfied with your order, we stand behind our service with a full money-back guarantee, giving you complete confidence and peace of mind when choosing us for your fresh food needs.
+  </p>
+</section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const observerOptions = { threshold: 0.15 };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    // Observe all sections and ad cards
-    document.querySelectorAll('section, .ad-card').forEach(el => observer.observe(el));
-  });
-
-  window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-  });
-
-  // Menu active state logic
-  document.querySelectorAll('a.menu').forEach(link => {
+  // Add 'active' class on clicked menu link and fade in color
+  document.querySelectorAll('.hero1 a.menu').forEach(link => {
     link.addEventListener('click', e => {
-      e.preventDefault();
-      document.querySelectorAll('a.menu').forEach(el => el.classList.remove('active'));
+      e.preventDefault(); // Remove if actual navigation needed
+      document.querySelectorAll('.hero1 a.menu').forEach(el => el.classList.remove('active'));
       link.classList.add('active');
-      // Navigation logic placeholder
+      // Optional: Add navigation logic here
     });
+  });
+
+  // Scroll fade-in effect using Intersection Observer
+  const observerOptions = { threshold: 0.1 };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Animate once
+      }
+    });
+  }, observerOptions);
+
+  // Observe sections and ad divs
+  document.querySelectorAll('section, section.ad > div').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Fade in body on page load
+  document.body.style.opacity = 0;
+  window.addEventListener('load', () => {
+    document.body.style.transition = "opacity 1s ease";
+    document.body.style.opacity = 1;
   });
 </script>
 
