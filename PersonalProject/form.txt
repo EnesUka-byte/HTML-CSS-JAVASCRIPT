@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Delivery Form</title>
+<style>
+  /* Base styles */
+  * {
+    box-sizing: border-box;
+  }
+
+  body, html {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #27AE60; /* green background */
+    color: #000;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  /* Container for the form */
+  .form-container {
+    background: #fff;
+    border-radius: 15px;
+    max-width: 450px;
+    width: 100%;
+    padding: 30px 35px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: #27AE60;
+    user-select: none;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    user-select: none;
+  }
+
+  input, textarea {
+    padding: 12px 15px;
+    border: 2px solid #27AE60;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline-offset: 2px;
+  }
+
+  input:focus, textarea:focus {
+    border-color: #2ECC71;
+    box-shadow: 0 0 8px #2ECC71;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  button {
+    background-color: #27AE60;
+    color: white;
+    font-weight: 700;
+    padding: 14px 0;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  button:hover:not(:disabled) {
+    background-color: #2ECC71;
+    transform: scale(1.05);
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    background-color: #7ED9A7;
+  }
+
+  /* Loading bar container */
+  .loading-container {
+    margin-top: 30px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .loading-text {
+    font-weight: 600;
+    color: #000;
+    font-size: 1.1rem;
+  }
+
+  .loading-bar {
+    width: 100%;
+    height: 12px;
+    background: #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .loading-progress {
+    height: 100%;
+    width: 0;
+    background: #27AE60;
+    border-radius: 8px;
+    animation: loadProgress 3s forwards;
+  }
+
+  @keyframes loadProgress {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="form-container" role="main" aria-label="Delivery information form">
+  <h2>Delivery Information</h2>
+  <form id="delivery-form" novalidate>
+    <div>
+      <label for="name">First Name *</label>
+      <input type="text" id="name" name="name" required autocomplete="given-name" />
+    </div>
+    <div>
+      <label for="surname">Last Name *</label>
+      <input type="text" id="surname" name="surname" required autocomplete="family-name" />
+    </div>
+    <div>
+      <label for="phone">Phone Number *</label>
+      <input type="tel" id="phone" name="phone" required pattern="[0-9+\-\s()]{7,}" placeholder="+1 (555) 555-5555" autocomplete="tel" />
+    </div>
+    <div>
+      <label for="address">Address *</label>
+      <textarea id="address" name="address" required placeholder="Street, City, ZIP" autocomplete="street-address"></textarea>
+    </div>
+    <div>
+      <label for="notes">Additional Notes (Optional)</label>
+      <textarea id="notes" name="notes" placeholder="Leave a note for delivery" rows="3"></textarea>
+    </div>
+
+    <button type="submit" aria-live="polite" aria-busy="false">Submit</button>
+  </form>
+
+  <div class="loading-container" role="status" aria-live="polite" aria-atomic="true">
+    <div class="loading-text">Delivery request sent. Processing...</div>
+    <div class="loading-bar" aria-hidden="true">
+      <div class="loading-progress"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('delivery-form');
+  const loadingContainer = document.querySelector('.loading-container');
+  const submitButton = form.querySelector('button');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // Disable form elements and show loading
+    [...form.elements].forEach(el => el.disabled = true);
+    submitButton.setAttribute('aria-busy', 'true');
+    loadingContainer.style.display = 'flex';
+
+    // Animate loading bar (3 seconds), then reset form
+    setTimeout(() => {
+      loadingContainer.style.display = 'none';
+      alert('Thank you! Your delivery request has been received.');
+      form.reset();
+      [...form.elements].forEach(el => el.disabled = false);
+      submitButton.setAttribute('aria-busy', 'false');
+    }, 3000);
+  });
+</script>
+
+</body>
+</html>

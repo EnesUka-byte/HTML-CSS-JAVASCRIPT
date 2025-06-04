@@ -4,43 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fresh Fruit Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    /* Reset and base */
     *, *::before, *::after {
       box-sizing: border-box;
     }
 
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%);
-      color: #333;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background: #27AE60; /* match green from Personal Project */
+      color: #0B2E10; /* darker green for text */
     }
 
-    /* Scrolling banner (replaces marquee) */
     .scrolling-banner {
       width: 100%;
-      background-color: #fff;
-      color: #27AE60;
-      font-weight: 700;
-      font-size: clamp(1.5rem, 2vw, 2rem);
+      background-color: #ffffff;
+      color: #27AE60; /* strong green */
+      font-weight: 600;
+      font-size: clamp(1.25rem, 2vw, 1.75rem);
       white-space: nowrap;
       overflow: hidden;
       position: relative;
       padding: 1rem 0;
-      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* slightly stronger shadow */
     }
+
     .scrolling-banner span {
       display: inline-block;
       padding-left: 100%;
-      animation: scrollText 15s linear infinite;
+      animation: scrollText 12s linear infinite;
     }
+
     @keyframes scrollText {
       0% {
         transform: translateX(0);
@@ -50,132 +46,172 @@
       }
     }
 
-    /* Container */
     .main-container {
-      flex: 1;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 2rem;
-      padding: 2rem;
+      padding: 3rem 2rem;
       max-width: 1200px;
-      margin: 0 auto 3rem;
-      width: 100%;
+      margin: 0 auto;
     }
 
-    /* Left column contains apple and pear stacked */
     .left-column {
       display: flex;
       flex-direction: column;
       gap: 2rem;
     }
 
-    /* Fruit blocks */
     .fruit-block {
-      background: #fff;
+      background: #ffffff;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+      box-shadow: 0 6px 18px rgba(39, 174, 96, 0.3); /* green-tinted shadow */
       display: flex;
       gap: 1.5rem;
-      padding: 1.5rem;
+      padding: 2rem;
       align-items: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .fruit-block:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      color: #0B2E10;
+      flex-wrap: wrap;
     }
 
-    /* Horizontal style */
+    .fruit-block:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(39, 174, 96, 0.45);
+    }
+
     .fruit-block.horizontal {
       flex-direction: row;
     }
-    /* Pear block reverse */
+
     .fruit-block.horizontal.pear {
       flex-direction: row-reverse;
     }
 
-    /* Vertical style (for oranges, bananas) */
     .fruit-block.vertical {
       flex-direction: column;
       text-align: center;
     }
 
-    /* Images */
     .fruit-block img {
       width: 40%;
       max-width: 280px;
       border-radius: 12px;
       object-fit: cover;
-      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
-      transition: transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(39, 174, 96, 0.25); /* subtle green shadow */
+      transition: transform 0.25s ease;
     }
+
     .fruit-block.vertical img {
       width: 100%;
       max-width: 320px;
       margin-bottom: 1rem;
     }
+
     .fruit-block:hover img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
-    /* Text */
     .fruit-block p {
-      font-size: 1.1rem;
-      line-height: 1.5;
-      flex: 1;
-      color: #444;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #0B2E10;
+      margin: 0 0 1rem 0;
+      flex: 1 1 50%;
+      min-width: 250px;
     }
 
-    /* Responsive */
+    /* Buy button styles */
+    .buy-button {
+      background-color: #27AE60;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      align-self: flex-start;
+      user-select: none;
+      box-shadow: 0 4px 12px rgba(39, 174, 96, 0.5);
+      flex-shrink: 0;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      min-width: 140px;
+    }
+
+    .buy-button:hover,
+    .buy-button:focus {
+      background-color: #2ECC71;
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(46, 204, 113, 0.7);
+      outline: none;
+    }
+
     @media (max-width: 900px) {
       .fruit-block.horizontal,
       .fruit-block.horizontal.pear {
         flex-direction: column !important;
         text-align: center;
       }
+
       .fruit-block img {
         width: 100%;
         max-width: 100%;
+      }
+
+      .fruit-block p {
+        flex: unset;
+      }
+
+      .buy-button {
+        align-self: center;
+        margin-top: 0.5rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="scrolling-banner">
+  <div class="scrolling-banner" role="region" aria-label="Scrolling banner with freshness slogan">
     <span>Freshness you can taste, from our farm to your fruit bowl.</span>
   </div>
 
   <div class="main-container">
 
     <div class="left-column">
-      <div class="fruit-block horizontal apple">
+      <div class="fruit-block horizontal apple" aria-label="Apple description">
         <img src="images/apple.jpg" alt="Apple" />
         <p>
-          At our fruit shop, we guarantee that every apple you pick is crisp, juicy, and harvested at peak ripeness. We work closely with trusted local growers who share our commitment to quality and freshness, ensuring our apples go from orchard to shelf in the shortest time possible. Whether you're biting into a sweet Gala or a tart Granny Smith, you can count on a farm-fresh experience with every crunch. If it’s not fresh, it’s not on our shelves—your satisfaction is our promise.
+          At our fruit shop, we guarantee that every apple you pick is crisp, juicy, and harvested at peak ripeness. We work closely with trusted local growers who share our commitment to quality and freshness, ensuring our apples go from orchard to shelf in the shortest time possible.
         </p>
+        <button class="buy-button" aria-label="Buy Apple now">Buy Now</button>
       </div>
 
-      <div class="fruit-block horizontal pear">
+      <div class="fruit-block horizontal pear" aria-label="Pear description">
         <img src="images/pear.jpg" alt="Pear" />
         <p>
           Discover our seasonal selection of handpicked fruits, always fresh and bursting with flavor. We pride ourselves on bringing you the best quality produce that brightens your day and nourishes your body.
         </p>
+        <button class="buy-button" aria-label="Buy Pear now">Buy Now</button>
       </div>
     </div>
 
-    <div class="fruit-block vertical orange">
+    <div class="fruit-block vertical orange" aria-label="Orange description">
       <img src="images/orange.jpg" alt="Orange" />
       <p>
-        Our oranges are handpicked at the perfect moment of ripeness to ensure maximum juiciness and flavor. Sourced from trusted local growers, each orange delivers a burst of freshness with every bite. Perfect for snacking or juicing, you can taste the sunshine in every orange you purchase from us.
+        Our oranges are handpicked at the perfect moment of ripeness to ensure maximum juiciness and flavor. Sourced from trusted local growers, each orange delivers a burst of freshness with every bite.
       </p>
+      <button class="buy-button" aria-label="Buy Orange now">Buy Now</button>
     </div>
 
-    <div class="fruit-block vertical banana">
+    <div class="fruit-block vertical banana" aria-label="Banana description">
       <img src="images/banana.jpg" alt="Banana" />
       <p>
         Our bananas are carefully selected at their peak ripeness, ensuring a sweet and creamy taste every time. Perfect as a quick snack or smoothie ingredient, our bananas bring natural energy and nutrition to your day.
       </p>
+      <button class="buy-button" aria-label="Buy Banana now">Buy Now</button>
     </div>
 
   </div>
