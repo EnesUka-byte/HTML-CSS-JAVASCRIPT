@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About Us - Fresh Fruits</title>
+  <title>Contact Us - Fresh Fruits</title>
   <link rel="stylesheet" href="css/style.css" />
   <style>
     html, body {
@@ -58,31 +58,66 @@
       100% { background-color: #27AE60; color: white; }
     }
 
-    .about-section {
+    .contact-section {
       background-color: white;
       margin: 40px auto;
       padding: 40px 20px;
       border-radius: 20px;
       width: 90%;
-      max-width: 900px;
+      max-width: 700px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }
 
-    .about-section h1 {
+    .contact-section h1 {
       font-family: 'Cambria', serif;
       text-align: center;
       color: #27AE60;
       margin-bottom: 20px;
     }
 
-    .about-section p {
+    .contact-section p {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 18px;
-      line-height: 1.6;
-      color: #222;
       text-align: center;
-      max-width: 800px;
-      margin: 0 auto 20px auto;
+      color: #222;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, textarea {
+      padding: 12px 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      resize: vertical;
+    }
+
+    button {
+      background-color: #27AE60;
+      color: white;
+      font-size: 16px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #219150;
+    }
+
+    @media (max-width: 600px) {
+      input, textarea {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
@@ -90,27 +125,29 @@
 
 <div class="hero1" role="navigation" aria-label="Main menu">
   <img src="images/logo.png" alt="Logo" />
-  <a class="menu" href="index.html">Home</a>
-  <a class="menu active" href="about.html">About</a>
-  <a class="menu" href="Contact">Contact</a>
+  <a class="menu" href="Home">Home</a>
+  <a class="menu" href="about.html">About</a>
+  <a class="menu active" href="Contact">Contact</a>
   <a class="menu" href="Shopping.html">Start Shopping!</a>
 </div>
 
-<section class="about-section" aria-label="About our company">
-  <h1 tabindex="0">About Our Fresh Fruit Journey</h1>
+<section class="contact-section" aria-label="Contact form">
+  <h1 tabindex="0">Get in Touch With Us</h1>
   <p>
-    At Fresh Fruits Co., we've been delivering nature's sweetest treasures since <strong>2010</strong>. What started as a small local farm stand has grown into a trusted name in fresh fruit delivery, serving happy customers across the country.
+    Have questions, suggestions, or just want to say hello? We'd love to hear from you!
+    Use the form below and we'll get back to you as soon as possible.
   </p>
-  <p>
-    We believe in the power of healthy eating and sustainable farming. That’s why all our fruits are sourced from local growers who care about quality just as much as we do. From tree to table, we ensure every apple, banana, and berry is hand-picked with love and delivered with care.
-  </p>
-  <p>
-    Our mission is simple: <em>Bring the freshest, most flavorful fruits to your doorstep—quickly, safely, and sustainably.</em> Whether you're stocking your kitchen or sending a healthy gift, we guarantee freshness and satisfaction, every single time.
-  </p>
+
+  <form>
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="message" rows="6" placeholder="Your Message..." required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
 </section>
 
 <script>
-  // Highlight About link
+  // Highlight Contact link
   document.querySelectorAll('.hero1 a.menu').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
