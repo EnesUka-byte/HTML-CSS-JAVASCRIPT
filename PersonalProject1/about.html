@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gift Card Shop — About</title>
+<style>
+  :root{
+    --ink:#0f172a; --ink-2:#334155; --muted:#64748b;
+    --line:#e2e8f0; --bg:#ffffff; --soft:#f8fafc; --accent:#111827;
+    --radius:16px; --gap:18px; --container:1200px;
+    --shadow:0 1px 2px rgba(0,0,0,.06),0 6px 24px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;color:var(--ink);background:#fff;line-height:1.5}
+  .container{max-width:var(--container);margin:auto;padding:0 20px}
+
+  header{
+    position:sticky;top:0;z-index:40;background:linear-gradient(90deg,#0f172a,#334155);color:#fff;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+  .brand .dot{width:28px;height:28px;border-radius:10px;background:#fff;color:#0f172a;display:grid;place-items:center;font-weight:900}
+  .actions{display:flex;align-items:center;gap:10px}
+  .btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);padding:10px 14px;border-radius:12px;font-weight:600;text-decoration:none}
+  .btn:hover{background:#f3f4f6}
+  .btn-dark{background:#fff;color:#0f172a}
+
+  main{padding:26px 0 60px}
+  h1, h2, h3{margin:0 0 12px 0}
+  p{margin-bottom:16px;color:var(--ink-2)}
+
+  .about-section{margin-bottom:40px}
+  .images{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px}
+  .images img{width:100%;border-radius:var(--radius);height:200px;object-fit:cover}
+  @media (max-width:980px){.images{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:640px){.images{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="brand"><span class="dot">GC</span> Gift Card Shop</div>
+    <div class="actions">
+      <a href="main.html" class="btn btn-dark">Home</a>
+      <a href="about.html" class="btn btn-dark">About</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="about-section">
+    <h1>About Gift Card Shop</h1>
+    <p>Welcome to Gift Card Shop! We are passionate about making gifting easy and fun. Our mission is to offer a wide variety of gift cards from the most popular brands, ensuring that everyone finds something perfect for any occasion.</p>
+    <p>Our team carefully selects and curates gift cards for entertainment, gaming, shopping, and mobile use, delivering a seamless online shopping experience for our customers.</p>
+  </div>
+
+  <div class="about-section">
+    <h2>Our Story</h2>
+    <p>Founded in 2025 as a school project, Gift Card Shop has quickly grown into a demo platform showcasing modern e-commerce design. Although prices and checkout are placeholders, we aim to provide a realistic shopping experience and a foundation for future development.</p>
+  </div>
+
+  <div class="about-section">
+    <h2>Gallery</h2>
+    <div class="images">
+      <img src="products.webp" alt="Team or product 1">
+      <img src="products1.jpg" alt="Team or product 2">
+      <img src="products2.webp" alt="Team or product 3">
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

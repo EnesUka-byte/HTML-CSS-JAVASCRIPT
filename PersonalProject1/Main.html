@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gift Card Shop — Demo</title>
+  <style>
+    :root{
+      --bg: #ffffff;
+      --ink: #0f172a;
+      --ink-2:#334155;
+      --muted:#64748b;
+      --line:#e2e8f0;
+      --accent:#111827;
+      --radius:16px;
+      --container:1200px;
+      --scroll-speed:26s;
+      --card-w:288px;
+      --card-h:160px;
+      --gap:24px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.5;
+    }
+    .container{max-width:var(--container); margin-inline:auto; padding:0 20px}
+
+    /* Hero */
+    .hero{
+      color:#fff;
+      background: linear-gradient(90deg,#0f172a,#334155);
+      padding: clamp(56px, 8vw, 96px) 0;
+      text-align:center;
+    }
+    .hero h1{font-size: clamp(28px, 5vw, 56px); margin:0 0 12px}
+    .hero p{margin:0 auto 24px; max-width:750px; color:#e5e7eb; font-size:clamp(16px,2.5vw,18px)}
+    .btn{
+      display:inline-block; text-decoration:none; background:#fff; color:#0f172a;
+      padding:12px 18px; border-radius:12px; font-weight:600; border:1px solid #e5e7eb;
+    }
+    .btn:hover{background:#f3f4f6}
+
+    /* Section headings */
+    .section{padding:64px 0}
+    .section h2{font-size: clamp(22px,3.5vw,28px); margin:0 0 8px; text-align:center}
+    .section p.lead{margin:0 auto 24px; text-align:center; color:var(--muted); max-width:720px}
+
+    /* Infinite scroller */
+    .scroller{
+      position:relative;
+      overflow:hidden;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      background:#f8fafc;
+      padding:28px 0;
+    }
+    .track{
+      display:flex;
+      gap:var(--gap);
+      will-change: transform;
+      animation: scroll var(--scroll-speed) linear infinite;
+    }
+    .scroller:hover .track{animation-play-state: paused;}
+    @keyframes scroll{ to{ transform: translateX(-50%); } }
+
+    /* Cards */
+    .card{
+      flex:0 0 var(--card-w);
+      height:var(--card-h);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    }
+    .card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .tag{display:block; font-size:12px; color:var(--muted); font-weight:600; letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; text-align:center}
+
+    /* How it works */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap:24px;
+      margin-top:28px;
+    }
+    .step{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:20px;
+      background:#f8fafc;
+      box-shadow: 0 1px 2px rgba(0,0,0,.04);
+      text-align:center;
+    }
+    .badge{
+      width:48px; height:48px; border-radius:50%;
+      display:grid; place-items:center;
+      margin:0 auto 10px; background:var(--accent); color:#fff; font-weight:700;
+    }
+    .step h3{margin:8px 0 6px; font-size:18px}
+    .step p{margin:0; color:var(--ink-2); font-size:14px}
+
+    footer{
+      border-top:1px solid var(--line);
+      background:#f8fafc;
+      color:var(--muted);
+      font-size:14px;
+      text-align:center;
+      padding:24px 0 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <h1>The Fastest Way to Gift</h1>
+      <p>Pick a card, choose an amount, and (in a real shop) it would deliver instantly. This is a visual demo for a school project — HTML + CSS only.</p>
+      <a href="shopping.html" class="btn">Browse Cards</a>
+	  <a href="about.html" class="btn">About</a>
+    </div>
+  </header>
+
+  <!-- POPULAR CARDS SCROLLER -->
+  <section class="section" id="shop">
+    <div class="container">
+      <span class="tag">Popular Gift Cards</span>
+    </div>
+    <div class="scroller">
+      <div class="track">
+        <!-- Set A -->
+        <div class="card"><img src="amazon.png" alt="Amazon Gift Card"></div>
+        <div class="card"><img src="netflix.jpg" alt="Netflix Gift Card"></div>
+        <div class="card"><img src="spotify.png" alt="Spotify Gift Card"></div>
+        <div class="card"><img src="steam.webp" alt="Steam Gift Card"></div>
+        <div class="card"><img src="googleplay.webp" alt="Google Play Gift Card"></div>
+        <div class="card"><img src="playstation.png" alt="PlayStation Gift Card"></div>
+        <div class="card"><img src="xbox.jpg" alt="Xbox Gift Card"></div>
+        <!-- Set B (duplicate for seamless loop) -->
+        <div class="card"><img src="amazon.png" alt="Amazon Gift Card"></div>
+        <div class="card"><img src="netflix.jpg" alt="Netflix Gift Card"></div>
+        <div class="card"><img src="spotify.png" alt="Spotify Gift Card"></div>
+        <div class="card"><img src="steam.webp" alt="Steam Gift Card"></div>
+        <div class="card"><img src="googleplay.webp" alt="Google Play Gift Card"></div>
+        <div class="card"><img src="playstation.png" alt="PlayStation Gift Card"></div>
+        <div class="card"><img src="xbox.jpg" alt="Xbox Gift Card"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <div class="container">
+      <h2>How It Works</h2>
+      <p class="lead">This is the typical UX for a digital gift card store. For your project, it’s all front-end visuals.</p>
+      <div class="grid">
+        <div class="step">
+          <div class="badge">1</div>
+          <h3>Pick a Card</h3>
+          <p>Choose from popular brands or your own store card.</p>
+        </div>
+        <div class="step">
+          <div class="badge">2</div>
+          <h3>Choose Amount</h3>
+          <p>Common values: €10, €25, €50, €100.</p>
+        </div>
+        <div class="step">
+          <div class="badge">3</div>
+          <h3>Send Instantly</h3>
+          <p>(In real life) delivered via email or download.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © <script>document.write(new Date().getFullYear())</script> GiftCardShop — Demo Project
+  </footer>
+
+</body>
+</html>

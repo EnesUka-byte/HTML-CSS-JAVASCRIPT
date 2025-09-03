@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gift Card Shop — Shop</title>
+<style>
+  :root{
+    --ink:#0f172a; --ink-2:#334155; --muted:#64748b;
+    --line:#e2e8f0; --bg:#ffffff; --soft:#f8fafc; --accent:#111827;
+    --radius:16px; --gap:18px; --container:1200px;
+    --shadow:0 1px 2px rgba(0,0,0,.06),0 6px 24px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;color:var(--ink);background:#fff;line-height:1.5}
+  .container{max-width:var(--container);margin:auto;padding:0 20px}
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:40;background:linear-gradient(90deg,#0f172a,#334155);color:#fff;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+  .brand .dot{width:28px;height:28px;border-radius:10px;background:#fff;color:#0f172a;display:grid;place-items:center;font-weight:900}
+  .actions{display:flex;align-items:center;gap:10px}
+  .btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);padding:10px 14px;border-radius:12px;font-weight:600;text-decoration:none}
+  .btn:hover{background:#f3f4f6}
+  .btn-dark{background:#fff;color:#0f172a}
+  .cart-btn{display:flex;align-items:center;gap:8px;background:#fff;color:#0f172a;border-radius:12px;padding:10px 14px;border:1px solid #e5e7eb;font-weight:700;cursor:pointer}
+  .pill{display:inline-flex;min-width:22px;height:22px;border-radius:999px;background:#0f172a;color:#fff;font-size:12px;align-items:center;justify-content:center;padding:0 6px}
+
+  /* Filter + Search bar */
+  .bar{padding:18px 0;border-bottom:1px solid var(--line);background:#fff}
+  .bar-inner{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .filters{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#fff;color:var(--ink-2);padding:8px 12px;border-radius:999px;font-weight:600;cursor:pointer}
+  .chip[data-active="true"]{background:#0f172a;color:#fff;border-color:#0f172a}
+
+  .search{
+    position:relative;display:flex;align-items:center;
+  }
+  #search{
+    border:1px solid var(--line);border-radius:999px;padding:9px 36px 9px 36px; /* room for icon */
+    font-size:14px;font-weight:500;min-width:230px;background:#fff;color:var(--ink);
+  }
+  #search:focus{outline:none;border-color:var(--ink-2)}
+  .search .icon{
+    position:absolute;left:12px;pointer-events:none;color:var(--muted);font-size:16px;line-height:1;
+  }
+  .search .clear{
+    position:absolute;right:10px;border:none;background:transparent;color:var(--muted);
+    font-size:16px;cursor:pointer;display:none;
+  }
+  .search.has-value .clear{display:block}
+
+  /* Grid */
+  main{padding:26px 0 60px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media (max-width: 980px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width: 640px){.grid{grid-template-columns:1fr}}
+
+  .card{
+    border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff;box-shadow:var(--shadow)
+  }
+  .media{aspect-ratio: 16/10; background:#f3f4f6;overflow:hidden}
+  .media img{width:100%;height:100%;object-fit:cover;display:block}
+  .content{padding:14px}
+  .title{display:flex;justify-content:space-between;gap:10px;align-items:center}
+  .title h3{margin:0;font-size:16px}
+  .brandname{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  .row{display:flex;gap:10px;align-items:center;margin-top:10px}
+  select, .qty{
+    border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-weight:600;background:#fff;color:var(--ink)
+  }
+  .price{margin-left:auto;font-weight:800}
+  .cta{margin-top:12px;display:flex;gap:10px}
+  .cta button{
+    flex:1;border:1px solid var(--line);background:#0f172a;color:#fff;padding:10px 14px;border-radius:12px;font-weight:800;cursor:pointer
+  }
+  .cta button:hover{opacity:.95}
+
+  /* Cart drawer */
+  .drawer{
+    position:fixed;top:0;right:0;width:min(420px,100%);height:100dvh;background:#fff;border-left:1px solid var(--line);
+    box-shadow:-10px 0 30px rgba(0,0,0,.08);transform:translateX(100%);transition:transform .3s ease;z-index:60;display:flex;flex-direction:column
+  }
+  .drawer[open]{transform:translateX(0)}
+  .drawer header{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
+  .drawer .nav{height:64px}
+  .drawer .close{border:none;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer}
+  .items{padding:14px;flex:1;overflow:auto}
+  .line{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;border-bottom:1px dashed var(--line);padding:10px 0}
+  .thumb{width:64px;height:48px;border-radius:8px;overflow:hidden;background:#f3f4f6}
+  .thumb img{width:100%;height:100%;object-fit:cover}
+  .meta h4{margin:0;font-size:14px}
+  .meta .muted{color:var(--muted);font-size:12px}
+  .qtybox{display:flex;gap:8px;align-items:center}
+  .qtybtn{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer}
+  .remove{background:none;border:none;color:#b91c1c;font-weight:700;cursor:pointer}
+  .cart-footer{border-top:1px solid var(--line);padding:14px}
+  .total{display:flex;justify-content:space-between;font-weight:800}
+  .checkout{margin-top:10px;width:100%;border:1px solid var(--line);background:#0f172a;color:#fff;padding:12px;border-radius:12px;font-weight:900;cursor:pointer}
+
+  .muted-note{color:var(--muted);font-size:12px;margin-top:6px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="brand"><span class="dot">GC</span> Gift Card Shop</div>
+    <div class="actions">
+      <a href="main.html" class="btn btn-dark">Home</a>
+      <button class="cart-btn" id="openCart">🛒 Cart <span class="pill" id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- Filter + Search -->
+<div class="bar">
+  <div class="container bar-inner">
+    <div class="filters" id="filters">
+      <button class="chip" data-filter="all" data-active="true">All</button>
+      <button class="chip" data-filter="Entertainment">Entertainment</button>
+      <button class="chip" data-filter="Gaming">Gaming</button>
+      <button class="chip" data-filter="Shopping">Shopping</button>
+      <button class="chip" data-filter="Mobile">Mobile</button>
+    </div>
+
+    <div class="search" id="searchWrap">
+      <span class="icon">🔍</span>
+      <input id="search" type="text" placeholder="Search gift cards…" />
+      <button class="clear" id="clearSearch" aria-label="Clear search">×</button>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <h2 style="margin:12px 0 18px">Shop Gift Cards</h2>
+  <div class="grid" id="grid"><!-- JS injects product cards here --></div>
+  <p class="muted-note">Demo only: prices and checkout are placeholders for a school project.</p>
+</main>
+
+<!-- Cart Drawer -->
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <header>
+    <div class="container nav">
+      <strong>Your Cart</strong>
+      <button class="close" id="closeCart">Close ✕</button>
+    </div>
+  </header>
+  <div class="items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="total"><span>Subtotal</span><span id="subtotal">€0.00</span></div>
+	<button class="checkout" id="checkoutBtn">Proceed to Checkout</button>
+<div id="checkoutForm" style="display:none; margin-top:12px;">
+  <h4>Checkout Details</h4>
+  <label>
+    Name: <input type="text" id="customerName" required style="width:100%; padding:8px; margin-top:4px"/>
+  </label>
+  <label>
+    Email: <input type="email" id="customerEmail" required style="width:100%; padding:8px; margin-top:4px"/>
+  </label>
+  <label>
+    Card Number: <input type="text" id="cardNumber" required style="width:100%; padding:8px; margin-top:4px"/>
+  </label>
+  <button id="confirmCheckout" style="margin-top:10px; padding:10px 16px; border:none; background:#0f172a; color:#fff; border-radius:12px; font-weight:700; cursor:pointer">Confirm Order</button>
+</div>
+<div id="checkoutMessage" style="margin-top:10px; color:green; font-weight:600;"></div>
+
+  </div>
+</aside>
+
+<!-- Checkout Overlay -->
+<div id="overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:100; justify-content:center; align-items:center; flex-direction:column; color:#fff;">
+  <div id="spinner" style="border:6px solid #f3f3f3; border-top:6px solid #0f172a; border-radius:50%; width:60px; height:60px; animation:spin 1s linear infinite;"></div>
+  <div id="overlayMessage" style="margin-top:20px; font-size:18px; text-align:center;"></div>
+  <button id="overlayOk" style="margin-top:20px; padding:10px 20px; border:none; border-radius:12px; background:#0f172a; color:#fff; font-weight:700; cursor:pointer; display:none;">OK</button>
+</div>
+
+<style>
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
+
+
+<script>
+/* ------------------------------
+   Data (swap images with your files)
+---------------------------------*/
+const PRODUCTS = [
+  { id: 'amazon',      name: 'Amazon Gift Card',     brand: 'Amazon',     category: 'Shopping',      img: 'amazon.png',      amounts: [10,25,50,100] },
+  { id: 'netflix',     name: 'Netflix Gift Card',    brand: 'Netflix',    category: 'Entertainment', img: 'netflix.jpg',     amounts: [15,25,50,100] },
+  { id: 'spotify',     name: 'Spotify Gift Card',    brand: 'Spotify',    category: 'Entertainment', img: 'spotify.png',     amounts: [10,30,60] },
+  { id: 'steam',       name: 'Steam Wallet Code',    brand: 'Steam',      category: 'Gaming',        img: 'steam.webp',      amounts: [20,50,100] },
+  { id: 'playstation', name: 'PlayStation Store',    brand: 'PlayStation',category: 'Gaming',        img: 'playstation.png', amounts: [10,25,50,75] },
+  { id: 'xbox',        name: 'Xbox Gift Card',       brand: 'Xbox',       category: 'Gaming',        img: 'xbox.jpg',        amounts: [10,25,50,100] },
+  { id: 'googleplay',  name: 'Google Play',          brand: 'Google Play',category: 'Mobile',        img: 'googleplay.webp', amounts: [10,25,50] },
+
+  /* New additions */
+  { id: 'ebay',        name: 'eBay Gift Card',       brand: 'eBay',       category: 'Shopping',      img: 'ebay.jpg',        amounts: [10,25,50,100] },
+  { id: 'roblox',      name: 'Roblox Gift Card',     brand: 'Roblox',     category: 'Gaming',        img: 'roblox.png',      amounts: [10,25,50] },
+  { id: 'apple',       name: 'Apple Gift Card',      brand: 'Apple',      category: 'Mobile',        img: 'apple.png',       amounts: [10,25,50,100] },
+  { id: 'disney',      name: 'Disney+ Gift Card',    brand: 'Disney+',    category: 'Entertainment', img: 'disney.png',      amounts: [25,50,100] },
+  { id: 'hulu',        name: 'Hulu Gift Card',       brand: 'Hulu',       category: 'Entertainment', img: 'hulu.jpg',        amounts: [25,50,100] },
+  { id: 'visa',        name: 'Visa Prepaid Card',    brand: 'Visa',       category: 'Shopping',      img: 'visa.png',        amounts: [25,50,100,200] },
+];
+
+/* ------------------------------
+   State (localStorage-backed)
+---------------------------------*/
+const CART_KEY = 'gcshop_cart_v1';
+let cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]'); // [{id, amount, qty}]
+
+function saveCart(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+function cartCount(){ return cart.reduce((s,i)=>s+i.qty,0); }
+function cartSubtotal(){ return cart.reduce((s,i)=> s + (i.amount*i.qty), 0); }
+function formatEUR(v){ return `€${v.toFixed(2)}`; }
+
+/* ------------------------------
+   Render Product Grid (category + search)
+---------------------------------*/
+const grid = document.getElementById('grid');
+const searchInput = document.getElementById('search');
+const searchWrap = document.getElementById('searchWrap');
+const clearSearchBtn = document.getElementById('clearSearch');
+let currentFilter = 'all';
+let currentQuery = '';
+
+function renderProducts(filter = currentFilter, query = currentQuery){
+  currentFilter = filter;
+  currentQuery = query;
+  grid.innerHTML = '';
+
+  const items = PRODUCTS.filter(p => {
+    const matchesFilter = (filter === 'all') || (p.category === filter);
+    const q = query.trim().toLowerCase();
+    const matchesQuery = !q || p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q);
+    return matchesFilter && matchesQuery;
+  });
+
+  items.forEach(p=>{
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="media"><img src="${p.img}" alt="${p.name}"></div>
+      <div class="content">
+        <div class="brandname">${p.category}</div>
+        <div class="title">
+          <h3>${p.name}</h3>
+          <span class="price" data-price>€${p.amounts[0].toFixed(2)}</span>
+        </div>
+        <div class="row">
+          <label>
+            <select data-amount>
+              ${p.amounts.map(a=>`<option value="${a}">€${a}</option>`).join('')}
+            </select>
+          </label>
+          <label class="qty">
+            <input type="number" min="1" value="1" style="width:64px;border:none;outline:none" />
+          </label>
+          <span class="price muted" style="margin-left:auto;color:var(--muted)">${p.brand}</span>
+        </div>
+        <div class="cta">
+          <button data-add data-id="${p.id}">Add to Cart</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+
+    const amountSel = card.querySelector('[data-amount]');
+    const priceEl   = card.querySelector('[data-price]');
+    amountSel.addEventListener('change', () => {
+      priceEl.textContent = `€${Number(amountSel.value).toFixed(2)}`;
+    });
+    const addBtn = card.querySelector('[data-add]');
+    addBtn.addEventListener('click', ()=>{
+      const qty = Number(card.querySelector('input[type="number"]').value || 1);
+      const amount = Number(amountSel.value);
+      addToCart(p.id, amount, qty);
+    });
+  });
+}
+
+/* Search interactions */
+searchInput.addEventListener('input', () => {
+  searchWrap.classList.toggle('has-value', !!searchInput.value.trim());
+  renderProducts(currentFilter, searchInput.value);
+});
+clearSearchBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  searchWrap.classList.remove('has-value');
+  renderProducts(currentFilter, '');
+});
+
+/* ------------------------------
+   Cart Logic + Rendering
+---------------------------------*/
+const drawer   = document.getElementById('drawer');
+const openCart = document.getElementById('openCart');
+const closeCart= document.getElementById('closeCart');
+const cartItems= document.getElementById('cartItems');
+const subtotal = document.getElementById('subtotal');
+const cartCountEl = document.getElementById('cartCount');
+
+openCart.addEventListener('click', ()=> drawer.setAttribute('open',''));
+closeCart.addEventListener('click', ()=> drawer.removeAttribute('open'));
+
+function addToCart(id, amount, qty){
+  const existing = cart.find(i=> i.id===id && i.amount===amount);
+  if(existing){ existing.qty += qty; }
+  else{ cart.push({id, amount, qty}); }
+  saveCart(); renderCart();
+  drawer.setAttribute('open','');
+}
+
+function changeQty(id, amount, delta){
+  const item = cart.find(i=>i.id===id && i.amount===amount);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) cart = cart.filter(i=>!(i.id===id && i.amount===amount));
+  saveCart(); renderCart();
+}
+
+function removeLine(id, amount){
+  cart = cart.filter(i=> !(i.id===id && i.amount===amount));
+  saveCart(); renderCart();
+}
+
+function renderCart(){
+  cartItems.innerHTML = '';
+  cart.forEach(line=>{
+    const p = PRODUCTS.find(pr=>pr.id===line.id);
+    const row = document.createElement('div');
+    row.className = 'line';
+    row.innerHTML = `
+      <div class="thumb"><img src="${p.img}" alt="${p.name}"></div>
+      <div class="meta">
+        <h4>${p.name}</h4>
+        <div class="muted">${p.brand} • €${line.amount.toFixed(2)} each</div>
+        <div class="qtybox">
+          <button class="qtybtn" aria-label="decrease">−</button>
+          <strong>${line.qty}</strong>
+          <button class="qtybtn" aria-label="increase">+</button>
+          <button class="remove">Remove</button>
+        </div>
+        <div class="muted">Line total: €${(line.amount*line.qty).toFixed(2)}</div>
+      </div>
+    `;
+    const qtyBtns = row.querySelectorAll('.qtybtn');
+    const decBtn = qtyBtns[0];
+    const incBtn = qtyBtns[1];
+    decBtn.addEventListener('click',()=>changeQty(line.id, line.amount, -1));
+    incBtn.addEventListener('click',()=>changeQty(line.id, line.amount, +1));
+    row.querySelector('.remove').addEventListener('click',()=>removeLine(line.id, line.amount));
+    cartItems.appendChild(row);
+  });
+  subtotal.textContent = formatEUR(cartSubtotal());
+  cartCountEl.textContent = cartCount();
+}
+
+
+
+/* Category filters */
+document.getElementById('filters').addEventListener('click', (e)=>{
+  const btn = e.target.closest('.chip'); if(!btn) return;
+  document.querySelectorAll('.chip').forEach(c=>c.dataset.active='false');
+  btn.dataset.active = 'true';
+  renderProducts(btn.dataset.filter, searchInput.value);
+});
+
+/* Init */
+renderProducts('all', '');
+renderCart();
+
+
+const checkoutBtn = document.getElementById('checkoutBtn');
+const checkoutForm = document.getElementById('checkoutForm');
+const confirmBtn = document.getElementById('confirmCheckout');
+const checkoutMessage = document.getElementById('checkoutMessage');
+
+checkoutBtn.addEventListener('click', ()=>{
+  checkoutForm.style.display = 'block';
+  checkoutMessage.textContent = '';
+});
+
+confirmBtn.addEventListener('click', ()=>{
+  const name = document.getElementById('customerName').value.trim();
+  const email = document.getElementById('customerEmail').value.trim();
+  const card = document.getElementById('cardNumber').value.trim();
+
+  if(!name || !email || !card){
+    alert('Please fill all checkout fields');
+    return;
+  }
+
+  // Show overlay with spinner
+  const overlay = document.getElementById('overlay');
+  const overlayMessage = document.getElementById('overlayMessage');
+  const overlayOk = document.getElementById('overlayOk');
+
+  overlay.style.display = 'flex';
+  overlayMessage.textContent = 'Processing Payment…';
+  overlayOk.style.display = 'none';
+
+  // Simulate processing delay
+  setTimeout(()=>{
+    overlayMessage.textContent = `Payment Succeeded!\nThank you, ${name}, for your order of ${cartCount()} gift card(s) totaling ${formatEUR(cartSubtotal())}.`;
+    overlayOk.style.display = 'block';
+    document.getElementById('spinner').style.display = 'none';
+    
+    // Clear cart
+    cart = [];
+    saveCart();
+    renderCart();
+    checkoutForm.style.display = 'none';
+  }, 2000); // 2 seconds delay
+});
+
+// Hide overlay when OK is clicked
+document.getElementById('overlayOk').addEventListener('click', ()=>{
+  const overlay = document.getElementById('overlay');
+  overlay.style.display = 'none';
+  document.getElementById('spinner').style.display = 'block';
+});
+
+
+</script>
+
+
+
+
+</body>
+</html>
